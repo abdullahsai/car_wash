@@ -1,0 +1,82 @@
+// Prisma schema for car wash app
+
+Datasource db {
+  provider = env("DB_PROVIDER", "sqlite")
+  url      = env("DATABASE_URL", "file:./dev.db")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  STAFF
+  VIEWER
+}
+
+enum Stage {
+  WAITING
+  WASHING
+  CLEANING
+  FINISHED
+  RELEASED
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  role     Role   @default(STAFF)
+  audits   Audit[]
+}
+
+model Car {
+  id            Int      @id @default(autoincrement())
+  plate         String
+  make          String?
+  model         String?
+  color         String?
+  customerName  String?
+  customerPhone String?
+  status        Stage    @default(WAITING)
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  audits        Audit[]
+  payments      Payment[]
+}
+
+model Audit {
+  id        Int      @id @default(autoincrement())
+  car       Car      @relation(fields: [carId], references: [id])
+  carId     Int
+  fromStage Stage?
+  toStage   Stage
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  movedAt   DateTime @default(now())
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  car       Car      @relation(fields: [carId], references: [id])
+  carId     Int
+  amount    Float
+  method    String
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model StageCapacity {
+  stage    Stage @id
+  capacity Int
+}
+
+model Setting {
+  id            Int    @id @default(1)
+  businessName  String @default("Car Wash")
+  currency      String @default("OMR")
+  timezone      String @default("Asia/Muscat")
+  logoUrl       String?
+}
