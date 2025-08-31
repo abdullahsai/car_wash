@@ -41,10 +41,23 @@ Visit http://localhost:3000. Seed accounts:
 - admin / admin123
 - staff / staff123
 
+## Environment Variables
+
+The backend expects the following environment variables:
+
+- `DATABASE_URL` – connection string for the PostgreSQL database.
+- `JWT_SECRET` – secret used for signing JSON Web Tokens.
+- `PORT` – optional HTTP port (defaults to `4000`).
+
+For production, it is recommended to deploy a PostgreSQL instance using CapRover's one-click app and use its connection URL for `DATABASE_URL`.
+
 ## Deploy on CapRover
 
-1. Create two apps (backend, frontend) and a PostgreSQL one-click app.
-2. For backend set env vars: `DATABASE_URL`, `JWT_SECRET`.
-3. Deploy images built from Dockerfiles.
-4. Attach persistent volume to Postgres.
+1. On the CapRover dashboard, install the PostgreSQL one-click app and note the provided connection URL.
+2. Create two apps for the backend and frontend.
+3. In the backend app, set environment variables:
+   - `DATABASE_URL` – the connection string from the one-click Postgres app.
+   - `JWT_SECRET` – any secret value used for tokens.
+4. From the `backend/` and `frontend/` directories, run `caprover deploy` to build and upload using the included `captain-definition` files.
+5. Attach a persistent volume to the Postgres app.
 
