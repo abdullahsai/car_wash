@@ -1,7 +1,7 @@
 // Prisma schema for car wash app
 
 datasource db {
-  provider = env("DB_PROVIDER")
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
