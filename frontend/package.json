@@ -18,7 +18,7 @@
     "clsx": "^2.0.0",
     "i18next": "^23.6.0",
     "react-i18next": "^13.2.0",
-    "@hello-pangea/dnd": "^15.2.0"
+    "@hello-pangea/dnd": "^16.6.0"
   },
   "devDependencies": {
     "typescript": "^5.4.0",
