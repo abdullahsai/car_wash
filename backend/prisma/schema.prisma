@@ -1,8 +1,8 @@
 // Prisma schema for car wash app
 
-Datasource db {
-  provider = env("DB_PROVIDER", "sqlite")
-  url      = env("DATABASE_URL", "file:./dev.db")
+datasource db {
+  provider = env("DB_PROVIDER")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
