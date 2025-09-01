@@ -6,8 +6,8 @@ ARG DATABASE_URL="postgresql://carwash:carwash@db:5432/carwash"
 ENV DATABASE_URL=$DATABASE_URL
 
 COPY package*.json ./
-RUN apk add --no-cache openssl \
-    && npm install --no-fund --no-audit
+COPY tsconfig.json ./
+RUN apk add --no-cache openssl && npm install --no-fund --no-audit
 COPY prisma ./prisma
 COPY src ./src
 RUN npx prisma generate && npm run build
