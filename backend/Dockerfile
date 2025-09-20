@@ -11,4 +11,7 @@ RUN apk add --no-cache openssl && npm install --no-fund --no-audit
 COPY prisma ./prisma
 COPY src ./src
 RUN npx prisma generate && npm run build
+COPY docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["node","dist/index.js"]
